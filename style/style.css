@@ -107,7 +107,7 @@
 
 
    .navbar {
-  height: 13%;
+  height: 11%;
        width: 100%;
        display: flex;
        align-items: center;
@@ -164,11 +164,12 @@
  
    .nav-mid a{
     color: var(--heading-color);
-    font-weight: 550;
+
    
    }
    .nav-logo{
     height: 80px;
+  
    }
    .nav-logo img{
     height: 100%;
@@ -186,7 +187,7 @@
 
   .hero-section{
          background-image: url(../images/Photos/0U5A6670.jpg);
-height: 60%;
+height: 62%;
  
       
           background-size: cover;
@@ -230,7 +231,7 @@ height: 60%;
     height: 27%;
     display: flex;
     justify-content: center;
-    padding-top: 60px;
+    padding-top: 50px;
 
     
 
@@ -270,7 +271,8 @@ height: 60%;
     .our-story{
       display: flex;
       gap: 45px;
-      padding: 150px 0px;
+      padding-top: 150px;
+      padding-bottom: 200px;
    
     }
     .our-story-left{
@@ -330,14 +332,14 @@ height: 60%;
 /* services section heading */
 
 
-.services-heading{
+/* .services-heading{
   margin-bottom: 90px;
-}
+} */
 
  
 /* services */
 .services-parent{
-  padding: 0px 130px;
+  padding: 90px 130px 0px 130px;
 }
 .services{
   display: flex;
@@ -374,8 +376,81 @@ height: 60%;
 }
 
 
-.button2{
 
+
+
+
+/* News and Events */
+
+.events-section-parent{
+  padding: 200px 0px;
+
+}
+
+
+.event-section{
+  display: flex;
+  /* height: 100h; */
+  gap: 40px;
+  margin-top: 90px;
+
+}
+.event-left{
+  width: 50%;
+}
+.event-right{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.event-left-img img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.event-left .event-card{
+  padding-top: 20px;
+}
+
+.event-card h3{
+font-size: 20px;
+margin: 9px 0px;
+}
+.event-card h5{
+  color: var(--logo-color);
+  font-size: 15px;
+}
+.event-card span{
+font-size: 13px;
+color: #929292;
+}
+.event-card-img{
+  display: flex;
+  gap: 25px;
+    /* padding: 30px 0px; */
+    padding-bottom: 30px;
+    border-bottom: 1px solid #929292;
+}
+.event-card-parnet{
+  width: 70%;
+
+}
+.event-right-img{
+  width: 30%;
+}
+.event-right-img img{
+   height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+
+
+.event-right .event-card-img:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 
