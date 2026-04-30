@@ -1,162 +1,503 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Carousel Hover Effect</title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
 <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* section */
-.blogs-section-parent{
-  padding:50px;
-}
+  body {
+    background: #f5f0e8;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
 
-/* carousel */
-.owl-carousel .item{
-  padding:10px;
-}
+  .pc-root {
+    padding: 0 28px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 
-/* blog card wrapper */
-.blog{
-  position: relative;
-}
+  /* ── Header ── */
+  .pc-header {
+    background: #7e5b13;
+    border-radius: 50px;
+    padding: 60px 48px 68px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 60px;
+  }
+  .pc-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,233,208,.08);
+    pointer-events: none;
+  }
+  .pc-eyebrow {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(245,233,208,.4);
+    margin-bottom: 14px;
+  }
+  .pc-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    font-style: italic;
+    color: #f5e9d0;
+    margin-bottom: 10px;
+  }
+  .pc-subheading {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: rgba(245,233,208,.45);
+  }
 
-/* image */
-.blog-img{
-  height:200px;
-  border-radius:10px;
-  overflow:hidden;
-  position: relative;
-  z-index: 2; /* image upar */
-}
+  /* ── Carousel Wrapper ── */
+  .pc-owl-wrap {
+    padding: 40px 0 40px;
+    overflow: visible;
+  }
 
-.blog-img img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
+  /*
+   * FIX 1: Do NOT set overflow:visible on .owl-stage-outer
+   * Owl Carousel needs overflow:hidden here to correctly measure,
+   * clone items, and loop. Removing the override restores looping.
+   * Add vertical padding instead so the scaled center card is not clipped.
+   */
+  .owl-carousel .owl-stage-outer {
+    overflow: hidden !important;
+    padding: 20px 0 !important;
+  }
 
-/* 🔥 hidden card (peeche) */
-.blog-card{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
+  /* ── Card ── */
+  .pc-card {
+    background: #fff;
+    border: 1px solid #ede8df;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.45s ease,
+                opacity 0.45s ease;
+    /*
+     * FIX 2: transform-origin was 'left center' — this caused cards to
+     * scale outward from their left edge instead of their own centre.
+     * Changed to 'center center' for symmetrical scaling.
+     */
+    transform-origin: center center;
+    cursor: pointer;
+  }
 
-  background:pink;
-  padding:15px;
-  border-radius:10px;
+  .pc-card:hover{
+    transform: scale(1.02);
+  }
 
-  z-index:1; /* image ke niche */
-  transition:0.4s ease;
-}
+  /*
+   * FIX 3: Owl Carousel adds the 'center' class to .owl-item (the wrapper),
+   * not to .pc-card directly. Selector must be .owl-item.center .pc-card
+   */
+  .owl-item.center .pc-card {
+    transform: scale(1.06);
+    opacity: 1;
+    box-shadow: 0 20px 60px rgba(126,91,19,0.18), 0 4px 16px rgba(0,0,0,0.10);
+  }
 
-/* hover effect */
-.blog:hover .blog-card{
-  transform:translateY(120px);
-}
+  .pc-card-img {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+  }
+  .pc-card-img img,
+  .pc-card-img svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  }
+  .owl-item.center .pc-card .pc-card-img img,
+  .owl-item.center .pc-card .pc-card-img svg {
+    transform: scale(1.04);
+  }
 
-/* buttons */
-.custom-nav{
-  margin-top:20px;
-  text-align:right;
-}
+  /* Gold top bar */
+  .pc-gold-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c9a050, #7e5b13, #c9a050, transparent);
+    z-index: 3;
+  }
 
-.custom-nav button{
-  padding:10px 15px;
-  margin-left:10px;
-  border:none;
-  background:#d5a749;
-  color:#fff;
-  cursor:pointer;
-}
+  /* Hover overlay */
+  .pc-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(20,14,6,.55) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+    z-index: 2;
+  }
+  .pc-card:hover .pc-card-overlay {
+    opacity: 1;
+  }
+  .pc-overlay-link {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #f5e9d0;
+    border-bottom: 1px solid rgba(245,233,208,.4);
+    padding-bottom: 2px;
+  }
 
+  /* Card body */
+  .pc-card-body {
+    padding: 16px 18px 20px;
+    border-top: 1px solid #f0ebe2;
+    position: relative;
+    min-height: 110px;
+  }
+  .pc-card-tag {
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #7e5b13;
+    margin-bottom: 4px;
+  }
+  .pc-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 300;
+    font-style: italic;
+    color: #1a1410;
+    line-height: 1.25;
+    margin-bottom: 7px;
+  }
+  .pc-card-desc {
+    font-size: 10px;
+    color: #9a8f80;
+    letter-spacing: 0.4px;
+    line-height: 1.65;
+  }
+  .pc-card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 300;
+    color: rgba(126,91,19,.15);
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    line-height: 1;
+  }
+
+  /* ── Controls ── */
+  .pc-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .pc-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid #d6cfc3;
+    color: #2a2018;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  .pc-btn:hover {
+    background: #f5f0e8;
+    border-color: #b5a990;
+  }
+  .pc-btn:active { transform: scale(0.93); }
+  .pc-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .pc-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .pc-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #d6cfc3;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    border: none;
+    padding: 0;
+  }
+  .pc-dot.active {
+    background: #7e5b13;
+    transform: scale(1.6);
+  }
+
+  /* ── Footer bar ── */
+  .pc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid #e0d8cc;
+  }
+  .pc-footer-count {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #bbb0a0;
+  }
+  .pc-footer-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #7e5b13;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(126,91,19,.3);
+    padding-bottom: 2px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .pc-footer-cta:hover {
+    color: #5a3e0a;
+    border-color: #7e5b13;
+  }
+
+  /* Hide default owl nav/dots */
+  .owl-nav, .owl-dots { display: none !important; }
 </style>
-</head>
 
-<body>
 
-<section class="blogs-section-parent">
+<div class="pc-root">
 
-<h2>Our Projects</h2>
-
-<div class="owl-carousel owl-theme">
-
-  <div class="item">
-    <div class="blog">
-      <div class="blog-img">
-        <img src="https://picsum.photos/400/300?1">
-      </div>
-      <div class="blog-card">
-        <h3>Project 1</h3>
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-    </div>
+  <!-- Header -->
+  <div class="pc-header">
+    <p class="pc-eyebrow">Portfolio of Work</p>
+    <h2 class="pc-heading">Our Projects</h2>
+    <p class="pc-subheading">Every painting tells a story — we bring that story back to life</p>
   </div>
 
-  <div class="item">
-    <div class="blog">
-      <div class="blog-img">
-        <img src="https://picsum.photos/400/300?2">
+  <!-- Carousel -->
+  <div class="pc-owl-wrap">
+    <div class="owl-carousel owl-theme" id="pc-owl">
+
+      <div class="item">
+        <div class="pc-card">
+          <div class="pc-card-img">
+            <div class="pc-gold-bar"></div>
+            <img src="./images/photos/0U5A5305.webp" alt="Portrait of a Noblewoman"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <svg style="display:none" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#c9a87c"/>
+              <ellipse cx="200" cy="120" rx="180" ry="120" fill="#8a6240" opacity=".62"/>
+              <ellipse cx="260" cy="200" rx="130" ry="100" fill="#5c3d1e" opacity=".55"/>
+              <rect x="0" y="210" width="400" height="90" fill="#3a2810" opacity=".78"/>
+              <ellipse cx="100" cy="80" rx="90" ry="70" fill="#e8d4a8" opacity=".48"/>
+            </svg>
+            <div class="pc-card-overlay"><span class="pc-overlay-link">View work</span></div>
+          </div>
+          <div class="pc-card-body">
+            <div class="pc-card-tag">Oil on Canvas</div>
+            <div class="pc-card-title">Portrait of a Noblewoman</div>
+            <div class="pc-card-desc">18th century, attributed to the Venetian school. Full conservation &amp; revarnishing.</div>
+            <div class="pc-card-num">01</div>
+          </div>
+        </div>
       </div>
-      <div class="blog-card">
-        <h3>Project 2</h3>
-        <p>Lorem ipsum dolor sit amet</p>
+
+      <div class="item">
+        <div class="pc-card">
+          <div class="pc-card-img">
+            <div class="pc-gold-bar"></div>
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#2d5e8a"/>
+              <ellipse cx="200" cy="120" rx="180" ry="120" fill="#1a3a5c" opacity=".62"/>
+              <ellipse cx="260" cy="200" rx="130" ry="100" fill="#8b4513" opacity=".55"/>
+              <rect x="0" y="210" width="400" height="90" fill="#4a7a4a" opacity=".78"/>
+              <ellipse cx="100" cy="80" rx="90" ry="70" fill="#d4af37" opacity=".48"/>
+            </svg>
+            <div class="pc-card-overlay"><span class="pc-overlay-link">View work</span></div>
+          </div>
+          <div class="pc-card-body">
+            <div class="pc-card-tag">Fresco Panel</div>
+            <div class="pc-card-title">Madonna con Bambino</div>
+            <div class="pc-card-desc">15th century devotional panel, tempera and gold leaf. Cleaned and stabilised.</div>
+            <div class="pc-card-num">02</div>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <div class="item">
+        <div class="pc-card">
+          <div class="pc-card-img">
+            <div class="pc-gold-bar"></div>
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#2e4a62"/>
+              <ellipse cx="200" cy="120" rx="180" ry="120" fill="#5c7a8a" opacity=".62"/>
+              <ellipse cx="260" cy="200" rx="130" ry="100" fill="#8ba8b8" opacity=".55"/>
+              <rect x="0" y="210" width="400" height="90" fill="#1c2b3a" opacity=".78"/>
+              <ellipse cx="100" cy="80" rx="90" ry="70" fill="#3d3022" opacity=".48"/>
+            </svg>
+            <div class="pc-card-overlay"><span class="pc-overlay-link">View work</span></div>
+          </div>
+          <div class="pc-card-body">
+            <div class="pc-card-tag">Oil on Panel</div>
+            <div class="pc-card-title">Storm Over the Harbour</div>
+            <div class="pc-card-desc">Dutch Golden Age seascape. Crack repair, inpainting and surface consolidation.</div>
+            <div class="pc-card-num">03</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="pc-card">
+          <div class="pc-card-img">
+            <div class="pc-gold-bar"></div>
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#4a7a4a"/>
+              <ellipse cx="200" cy="120" rx="180" ry="120" fill="#6dab5e" opacity=".62"/>
+              <ellipse cx="260" cy="200" rx="130" ry="100" fill="#e8a040" opacity=".55"/>
+              <rect x="0" y="210" width="400" height="90" fill="#5c8a9a" opacity=".78"/>
+              <ellipse cx="100" cy="80" rx="90" ry="70" fill="#d4b8c0" opacity=".48"/>
+            </svg>
+            <div class="pc-card-overlay"><span class="pc-overlay-link">View work</span></div>
+          </div>
+          <div class="pc-card-body">
+            <div class="pc-card-tag">Watercolour</div>
+            <div class="pc-card-title">Garden at Giverny</div>
+            <div class="pc-card-desc">Impressionist work on paper. De-acidification and mount conservation.</div>
+            <div class="pc-card-num">04</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="pc-card">
+          <div class="pc-card-img">
+            <div class="pc-gold-bar"></div>
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#c4a020"/>
+              <ellipse cx="200" cy="120" rx="180" ry="120" fill="#8b6914" opacity=".62"/>
+              <ellipse cx="260" cy="200" rx="130" ry="100" fill="#2d5e8a" opacity=".55"/>
+              <rect x="0" y="210" width="400" height="90" fill="#8a3a10" opacity=".78"/>
+              <ellipse cx="100" cy="80" rx="90" ry="70" fill="#1a3a5c" opacity=".48"/>
+            </svg>
+            <div class="pc-card-overlay"><span class="pc-overlay-link">View work</span></div>
+          </div>
+          <div class="pc-card-body">
+            <div class="pc-card-tag">Tempera on Wood</div>
+            <div class="pc-card-title">The Annunciation</div>
+            <div class="pc-card-desc">Early Renaissance altarpiece fragment. Extensive flaking stabilised and retouched.</div>
+            <div class="pc-card-num">05</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="pc-card">
+          <div class="pc-card-img">
+            <div class="pc-gold-bar"></div>
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="300" fill="#9b6040"/>
+              <ellipse cx="200" cy="120" rx="180" ry="120" fill="#6b3820" opacity=".62"/>
+              <ellipse cx="260" cy="200" rx="130" ry="100" fill="#c89870" opacity=".55"/>
+              <rect x="0" y="210" width="400" height="90" fill="#2a1808" opacity=".78"/>
+              <ellipse cx="100" cy="80" rx="90" ry="70" fill="#d4a870" opacity=".48"/>
+            </svg>
+            <div class="pc-card-overlay"><span class="pc-overlay-link">View work</span></div>
+          </div>
+          <div class="pc-card-body">
+            <div class="pc-card-tag">Oil on Canvas</div>
+            <div class="pc-card-title">Self-Portrait with Palette</div>
+            <div class="pc-card-desc">19th century academic work. Lining, structural treatment and tonal restoration.</div>
+            <div class="pc-card-num">06</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.owl-carousel -->
   </div>
 
-  <div class="item">
-    <div class="blog">
-      <div class="blog-img">
-        <img src="https://picsum.photos/400/300?3">
-      </div>
-      <div class="blog-card">
-        <h3>Project 3</h3>
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-    </div>
+  <!-- Controls -->
+  <div class="pc-controls">
+    <button class="pc-btn" id="pc-prev" aria-label="Previous project">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M10 3L5 8l5 5"/>
+      </svg>
+    </button>
+    <button class="pc-btn" id="pc-next" aria-label="Next project">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 3l5 5-5 5"/>
+      </svg>
+    </button>
   </div>
 
-</div>
+  <!-- Footer -->
+  <div class="pc-footer">
+    <span class="pc-footer-count" id="pc-footer-count">01 / 06</span>
+    <button class="pc-footer-cta">View all projects &nbsp;→</button>
+  </div>
 
-<div class="custom-nav">
-  <button class="custom-prev">Prev</button>
-  <button class="custom-next">Next</button>
-</div>
+</div><!-- /.pc-root -->
 
-</section>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <script>
+$(document).ready(function () {
 
-var owl = $('.owl-carousel').owlCarousel({
-  loop:true,
-  margin:10,
-  nav:false,
-  dots:false,
-  responsive:{
-    0:{ items:1 },
-    600:{ items:2 },
-    1000:{ items:3 }
-  }
+  const $owl = $('#pc-owl');
+
+  /* INIT - SIMPLE */
+  $owl.owlCarousel({
+    items: 3,
+    margin: 24,
+    loop: false,      
+    center: true, 
+    nav: false,
+    dots: false,
+    smartSpeed: 500,
+    items:2,
+    responsive: {
+      0: { items: 1 },
+      600: { items: 2 },
+      1000: { items: 3 }
+    }
+  });
+
+  /* NEXT / PREV */
+  $('#pc-next').on('click', function () {
+    $owl.trigger('next.owl.carousel');
+  });
+
+  $('#pc-prev').on('click', function () {
+    $owl.trigger('prev.owl.carousel');
+  });
+
+
+
+
 });
-
-$('.custom-next').click(function(){
-  owl.trigger('next.owl.carousel');
-});
-
-$('.custom-prev').click(function(){
-  owl.trigger('prev.owl.carousel');
-});
-
 </script>
-
-</body>
-</html>
