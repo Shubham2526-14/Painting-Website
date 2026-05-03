@@ -43,8 +43,8 @@ $(document).ready(function () {
 
   /* INIT - SIMPLE */
   $owl.owlCarousel({
-    items: 3,
-    margin: 25,
+    items: 4,
+    margin: 20,
     loop: false,      
     // center: true, 
     nav: false,
@@ -71,6 +71,10 @@ $(document).ready(function () {
 
 
 });
+
+
+
+
 
 
 
