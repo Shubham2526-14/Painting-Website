@@ -1,0 +1,341 @@
+@media (max-width: 1050px) {
+
+
+
+ .navbar {
+height: 8%;
+}
+.nav-mid ul {
+ 
+    gap: 30px;
+                
+}
+
+.hero-section {
+    height: 74%;
+}
+.about-heading {
+    width: 80%;
+}
+
+.about-section {
+    height: 18%;
+}
+
+.about-heading p {
+    font-size: 38px;
+}
+.our-story-para {
+    margin: 28px 0px 40px 0px;
+}
+
+.services-parent {
+    padding: 0px 60px;
+}
+
+
+
+
+}
+
+
+@media (max-width: 992px) {
+
+    .nav-mid {
+        display: none;
+    }
+    .menu-bar{
+  display: block
+}
+
+
+.nav-logo {
+   height: 70px;     
+} 
+
+
+    /* .about-heading {
+        width: 100%;
+    }    */
+
+
+.about-heading p {
+    font-size: 32px;
+}
+.about-heading {
+        width: 100%;
+    }
+
+
+
+                    .services-parent {
+                        padding: 0px 0px;
+                    }
+
+                    .services {
+                            padding-bottom: 120px;
+                            gap: 30px;
+
+                    }
+                    .services-img {
+                            height: 560px;
+
+                    }
+
+                    .our-story {
+                            margin: 100px 0px 150px 0px;
+                    }
+
+                    .small-heading {
+                        font-size: 20px;
+                    }
+                    .event-section {
+                        gap: 25px;
+                    }
+                    .event-card-img {
+                        gap: 15px;
+                    }
+
+                    .our-story {
+                        gap: 35px;
+                    }
+
+               
+
+
+
+
+
+                    
+
+
+
+
+                }
+                
+
+
+
+
+
+
+                @media (max-width: 768px) {
+                        .services-img {
+                            height: 520px;
+                        }
+
+                }
+
+
+
+
+
+
+@media (max-width: 576px) {
+     .navbar {
+height: 12%;
+}
+
+.navbar {
+    padding: 0px 20px;
+}
+    .nav-logo {
+        height: 63px;
+    }
+
+    .menu-bar img {
+        height: 29px;
+    }
+
+
+.tata-img{
+    display: none;
+}
+
+h1 {
+    font-size: 38px;
+}
+
+    .about-heading p {
+    font-size: 20px;
+    }
+
+    .hero-black-div {
+        padding: 0px 20px;
+    }
+
+        .hero-section {
+        height: 70%;
+    }
+
+    .our-story {
+        /* flex-direction: column; */
+        flex-direction:column-reverse;
+
+            }
+
+            .our-story-right {
+                width: 100%;
+            }
+
+            .our-story-left {
+                width: 100%;
+            }   
+
+            .our-story {       
+                         gap: 15px;
+            }
+
+            .heading {
+                font-size: 50px;
+            }
+
+                .our-story-para {
+                    margin: 20px 0px 30px 0px;
+                }
+
+
+                .services {
+                    flex-direction:column-reverse;
+                }
+
+                .services-parent .services:nth-last-child(2) {
+                       flex-direction:column;
+
+}
+
+                .services-text{
+                   width: 100%;
+                   padding: 0px 5px;
+                }
+
+                .services-img-parent {
+                    width: 100%;
+                }
+
+                .services-img {
+                    height: auto;
+                }
+                .short-heading {
+                    font-size: 40px;
+                }
+                .services {
+                    gap: 20px;
+                    padding-bottom: 105px;
+                }
+
+                .all-heading {
+                    margin-bottom: 60px;
+                }
+
+                .event-section {
+                    flex-direction: column;
+                }
+                .event-left {
+                    width: 100%;
+                        border-bottom: 1px solid #929292;
+                        padding-bottom: 30px;
+
+                }
+                .event-right {
+                    width: 100%;
+
+                }
+
+
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+@media (max-width: 480px) {
+    .nav-logo {
+        height: 56px;
+    }
+      .menu-bar img {
+        height: 24px;
+    }
+
+    .tata-img img {
+        width: 80px;
+    }
+    .tata-img h4 {
+        font-size: 12px;
+    }
+    .nav-right {
+        gap: 21px;
+    }
+        .navbar {
+height: 10%;        
+        }
+
+            .hero-section {
+        height: 72%;
+    }
+
+    .about-heading p {
+        font-size: 17px;
+    }
+
+        .heading {
+            font-size: 35px;
+        }
+
+
+            .our-story-para {
+                margin: 15px 0px 30px 0px;
+                }
+
+                .bookmarkBtn {
+                        transform: scale(1.1);
+                            margin-left: 4px;
+
+                }
+                .full-video {
+                    height: 70vh;
+                }
+
+                    .services {
+                
+                    padding-bottom: 80px;
+                }
+
+                 .all-heading {
+                    margin-bottom: 45px;
+                }
+                .para {
+                        line-height: 23px;
+                }
+                    .small-heading {
+                        font-size: 17px;
+                    }
+                    .txt-btn p {
+                        font-size: 13px;
+                    }
+
+
+
+
+               
+
+
+
+
+
+
+
+
+}
